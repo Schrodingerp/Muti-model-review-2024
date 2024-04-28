@@ -4,7 +4,7 @@
 # @File ： 依赖分析.py
 # @Software : PyCharm
 import csv
-from langdetect import detect
+from langdetect import detect #语言监测
 from stanfordcorenlp import StanfordCoreNLP
 
 noise = ['phone','phones','Galaxy','galaxy','Samsung','cellphone','Motorola','end','Amazon','S21','s21','FE','one','s20','iPhones','<br>','iPhone']
@@ -16,11 +16,11 @@ pro = ['B08BGD4G36', 'B08BJJ1T9F', 'B07755LZ67', 'B077578W38', 'B09RG132Q5', 'B0
 
 reviews = []
 for i in range(len(pro)):
-    with open('Data/phone review data (split)/' + pro[i] + '.csv', "r", encoding='utf8') as f:  # 打开文件
+    with open('Data/phone review data (split)/' + pro[i] + '.csv', "r", encoding='utf-8') as f:  # 打开文件
         lines = csv.reader(f)
         for line in lines:
             try:
-                if detect(line[0]) == 'en' and len(line[0]) > 50:
+                if detect(line[0]) == 'en' and len(line[0]) > 50:  #剔除非英语评论与长度太短的评论
                     reviews.append(line[0])
             except:
                 print(line[0])
@@ -39,13 +39,14 @@ for p in range(len(reviews)):
     # print(nlp.pos_tag(sentence))
     # print(nlp.dependency_parse(sentence))
 
-    token = nlp.word_tokenize(sentence)
-    pos = nlp.pos_tag(sentence)
-    dependency = nlp.dependency_parse(sentence)
+    token = nlp.word_tokenize(sentence) #分词
+    pos = nlp.pos_tag(sentence) #词性标注
+    dependency = nlp.dependency_parse(sentence)  #依赖关系
 
     for i in range(len(dependency)):
         cell = [[], [], [[], [], []]]
         # if dependency[i][0] == 'nmod':
+        #在Python中，如果一个语句太长，我们可以使用反斜杠“\”将其分成多行来书写。这样做不仅使代码更加整洁，还方便我们进行阅读和调试。
         if dependency[i][0] == 'compound' or dependency[i][0] == 'nmod' and pos[dependency[i][2] - 1][1][0] == 'N' and \
                 pos[dependency[i][1] - 1][1][0] == 'N':
             # print(token[dependency[i][2]-1] , token[dependency[i][1]-1])
