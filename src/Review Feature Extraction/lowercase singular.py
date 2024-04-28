@@ -18,7 +18,7 @@ with open("Output/feature triples.csv", "r", encoding='utf8') as f:  # 打开文
         a = line[0].lower()
         b = line[1].lower()
         if p.singular_noun(a) != False:
-            a = p.singular_noun(a)
+            a = p.singular_noun(a)  #变成名词单数
         if p.singular_noun(b) != False:
             b = p.singular_noun(b)
         content.append([a,b,line[2].lower()])
