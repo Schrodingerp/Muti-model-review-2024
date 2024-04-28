@@ -93,6 +93,6 @@ for p in range(len(reviews)):
             opinion = ''
             for k in range(len(opinion_all)):
                 opinion = opinion + opinion_all[k] + ' '
-            write.writerow([cell[0][0], cell[1][0], opinion[0:-1]])
+            write.writerow([cell[0][0], cell[1][0], opinion[0:-1]])             #写入种子特征集
 
 nlp.close()
